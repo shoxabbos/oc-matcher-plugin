@@ -19,6 +19,8 @@ class Profile extends Model
     public $rules = [
     ];
 
+    public $guarded = ['id', 'user_id'];
+
     /**
      * @var string The database table used by the model.
      */
