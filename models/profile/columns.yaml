@@ -1,0 +1,65 @@
+columns:
+    id:
+        label: id
+        type: number
+    user_id:
+        label: user_id
+        type: number
+    nationality:
+        label: nationality
+        type: text
+    laguage:
+        label: laguage
+        type: text
+        invisible: true
+    gender:
+        label: gender
+        type: text
+        invisible: true
+    relationship_status:
+        label: relationship_status
+        type: text
+        invisible: true
+    age:
+        label: age
+        type: text
+        invisible: true
+    children:
+        label: children
+        type: text
+        invisible: true
+    height:
+        label: height
+        type: text
+        invisible: true
+    weight:
+        label: weight
+        type: text
+        invisible: true
+    education:
+        label: education
+        type: text
+        invisible: true
+    job:
+        label: job
+        type: text
+        invisible: true
+    profession:
+        label: profession
+        type: text
+        invisible: true
+    contact:
+        label: contact
+        type: text
+        invisible: true
+    created_at:
+        label: created_at
+        type: datetime
+        invisible: true
+    updated_at:
+        label: updated_at
+        type: datetime
+        invisible: true
+    deleted_at:
+        label: deleted_at
+        type: datetime

@@ -1,0 +1,10 @@
+name: Profiles
+form: $/shohabbos/matcher/models/profile/fields.yaml
+modelClass: Shohabbos\Matcher\Models\Profile
+defaultRedirect: shohabbos/matcher/profiles
+create:
+    redirect: 'shohabbos/matcher/profiles/update/:id'
+    redirectClose: shohabbos/matcher/profiles
+update:
+    redirect: shohabbos/matcher/profiles
+    redirectClose: shohabbos/matcher/profiles

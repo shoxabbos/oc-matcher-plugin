@@ -1,0 +1,11 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table shohabbos_matcher_profiles'
+    - builder_table_create_shohabbos_matcher_profiles.php
+1.0.3:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles.php
+1.0.4:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_2.php

@@ -1,0 +1,5 @@
+fields:
+    age:
+        label: Age
+        span: auto
+        type: text
