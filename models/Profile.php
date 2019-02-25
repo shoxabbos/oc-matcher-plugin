@@ -8,7 +8,6 @@ use Model;
 class Profile extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    
     use \October\Rain\Database\Traits\SoftDelete;
 
     protected $dates = ['deleted_at'];
@@ -25,4 +24,9 @@ class Profile extends Model
      * @var string The database table used by the model.
      */
     public $table = 'shohabbos_matcher_profiles';
+
+    public $belongsTo = [
+        'user' => 'RainLab\User\Models\User'
+    ];
+    
 }
