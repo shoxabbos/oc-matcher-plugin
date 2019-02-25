@@ -10,9 +10,12 @@ class Api extends Controller
 {
 
     public function getProfiles() {
-        return Profile::listApi([
-            
-        ]);
+        $data = Input::only([
+            'nationality', 'laguage', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
+            'education', 'job', 'profession', 'contact', 'language'
+        ], []);
+
+        return Profile::listApi($data);
     }
 
     public function getUserProfile() {
