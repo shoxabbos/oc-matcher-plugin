@@ -9,6 +9,12 @@ use Shohabbos\Matcher\Models\Profile;
 class Api extends Controller
 {
 
+    public function getProfiles() {
+        return Profile::listApi([
+            
+        ]);
+    }
+
     public function getUserProfile() {
         return $this->getUser();
     }

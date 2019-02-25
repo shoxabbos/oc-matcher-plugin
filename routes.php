@@ -7,6 +7,7 @@ Route::group(['prefix' => 'api', 'middleware' => ['\Tymon\JWTAuth\Middleware\Get
 
 	Route::get('/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@getProfile');
 	Route::get('/profile', 'Shohabbos\Matcher\Controllers\Api@getUserProfile');
+	Route::get('/profiles', 'Shohabbos\Matcher\Controllers\Api@getProfiles');
 
 	Route::post('/profile', 'Shohabbos\Matcher\Controllers\Api@createProfile');
 
