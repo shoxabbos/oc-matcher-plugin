@@ -9,7 +9,9 @@ use Shohabbos\Matcher\Models\Profile;
 class Api extends Controller
 {
 
-
+    public function getUserProfile() {
+        return $this->getUser();
+    }
 
     public function createProfile() {
     	$user = $this->getUser();
