@@ -1,0 +1,9 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+profiles:
+    label: Profiles
+    list: $/shohabbos/matcher/models/profile/columns.yaml
+    form: $/shohabbos/matcher/models/profile/fields.yaml
+    emptyMessage: backend::lang.list.no_records

@@ -24,3 +24,6 @@
 1.0.9:
     - 'Updated table shohabbos_matcher_profiles'
     - builder_table_update_shohabbos_matcher_profiles_7.php
+1.0.10:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_8.php

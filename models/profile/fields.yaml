@@ -3,3 +3,20 @@ fields:
         label: Age
         span: auto
         type: text
+    properties:
+        label: Properties
+        prompt: 'Add new item'
+        span: full
+        type: repeater
+        form:
+            fields:
+                key:
+                    label: Key
+                    span: auto
+                    required: 1
+                    type: text
+                value:
+                    label: Value
+                    span: auto
+                    required: 1
+                    type: text

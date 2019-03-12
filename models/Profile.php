@@ -12,6 +12,8 @@ class Profile extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $jsonable = ['properties'];
+
     /**
      * @var array Validation rules
      */

@@ -22,6 +22,10 @@ class Api extends Controller
         return $this->getUser();
     }
 
+    public function getUserProfiles() {
+        return $this->getUser()->profiles;   
+    }
+
     public function createProfile() {
     	$user = $this->getUser();
 
