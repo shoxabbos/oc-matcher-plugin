@@ -31,6 +31,14 @@ class Profile extends Model
         'user' => 'RainLab\User\Models\User'
     ];
 
+    public $attachOne = [
+        'photo' => 'System\Models\File'
+    ];
+
+    public $attachMany = [
+        'photos' => 'System\Models\File'
+    ];
+
     /**
      * The attributes on which the post list can be ordered.
      * @var array

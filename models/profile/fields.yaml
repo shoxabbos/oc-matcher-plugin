@@ -1,22 +1,126 @@
 fields:
+    user:
+        label: 'User id'
+        nameFrom: name
+        descriptionFrom: surname
+        list: $/rainlab/user/models/user/columns.yaml
+        span: auto
+        type: recordfinder
+    name:
+        label: Name
+        span: auto
+        type: text
+    surname:
+        label: Surname
+        span: auto
+        type: text
+    middlename:
+        label: Middlename
+        span: auto
+        type: text
+    gender:
+        label: Gender
+        options:
+            - Female
+            - Male
+        span: auto
+        required: 1
+        type: dropdown
+    nationality:
+        label: Nationality
+        options:
+            uzbek: Uzbek
+            russian: Русский
+        span: auto
+        required: 1
+        type: dropdown
+    laguage:
+        label: Language
+        options:
+            uzbek: 'O''zbekcha'
+        span: auto
+        type: dropdown
+    relationship_status:
+        label: 'Relationship status'
+        options:
+            married: женат/замужем
+        span: auto
+        type: dropdown
     age:
         label: Age
         span: auto
         type: text
-    properties:
-        label: Properties
-        prompt: 'Add new item'
-        span: full
-        type: repeater
-        form:
-            fields:
-                key:
-                    label: Key
-                    span: auto
-                    required: 1
-                    type: text
-                value:
-                    label: Value
-                    span: auto
-                    required: 1
-                    type: text
+    children:
+        label: Children
+        span: auto
+        required: 1
+        type: number
+    height:
+        label: Height
+        span: auto
+        required: 1
+        type: number
+    weight:
+        label: Weight
+        span: auto
+        required: 1
+        type: number
+    education:
+        label: Education
+        options:
+            elementary_education: 'начальное образование'
+        span: auto
+        type: dropdown
+    job:
+        label: Job
+        span: auto
+        type: text
+    profession:
+        label: Profession
+        span: auto
+        type: text
+    contact:
+        label: Contact
+        span: auto
+        type: text
+    photo:
+        label: 'Main photo'
+        mode: image
+        imageWidth: '500'
+        imageHeight: '500'
+        fileTypes: 'png,jpg,jpeg'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: jpg
+        span: auto
+        type: fileupload
+    photos:
+        label: 'Photo gallery'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+tabs:
+    fields:
+        properties:
+            label: Properties
+            prompt: 'Add new item'
+            span: full
+            type: repeater
+            tab: 'Main data'
+            form:
+                fields:
+                    properties:
+                        label: Properties
+                        prompt: 'Add new item'
+                        span: auto
+                        type: text
+                    value:
+                        label: Value
+                        span: auto
+                        required: 1
+                        type: text

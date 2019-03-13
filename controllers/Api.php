@@ -60,7 +60,7 @@ class Api extends Controller
     }
 
     public function getProfile($id) {
-     	$model = $this->findProfileModel($id);
+     	$model = Profile::with(['photo', 'photos'])->find($id);
 
         if (!$model) {
             return response()->json(['error' => 'not_found'], 404);
