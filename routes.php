@@ -13,10 +13,12 @@ Route::group(['prefix' => 'api', 'middleware' => ['\Tymon\JWTAuth\Middleware\Get
 	
 	// user account
 	Route::get('/user', 'Shohabbos\Matcher\Controllers\Api@getUserProfile');
-	Route::get('/user/profiles', 'Shohabbos\Matcher\Controllers\Api@getUserProfiles');
 
 	
-	// user account manage
+	// user profile manage
+	Route::get('/user/profiles', 'Shohabbos\Matcher\Controllers\Api@getUserProfiles');
+	Route::get('/user/profile/{id}/wishlist', 'Shohabbos\Matcher\Controllers\Api@getWishlist');
+	Route::post('/user/profile/{id}/wishlist', 'Shohabbos\Matcher\Controllers\Api@createWishlist');
 	Route::post('/user/profile', 'Shohabbos\Matcher\Controllers\Api@createProfile');
 	Route::delete('/user/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@deleteProfile');
 	Route::put('/user/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@updateProfile');

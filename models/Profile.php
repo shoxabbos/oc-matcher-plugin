@@ -39,6 +39,10 @@ class Profile extends Model
         'photos' => 'System\Models\File'
     ];
 
+    public $hasMany = [
+        'wishlist' => [ListItem::class]
+    ];
+
     /**
      * The attributes on which the post list can be ordered.
      * @var array

@@ -20,17 +20,11 @@ fields:
         type: text
     gender:
         label: Gender
-        options:
-            - Female
-            - Male
         span: auto
         required: 0
         type: dropdown
     nationality:
         label: Nationality
-        options:
-            uzbek: Uzbek
-            russian: Русский
         span: auto
         required: 0
         type: dropdown
@@ -42,8 +36,6 @@ fields:
         type: dropdown
     relationship_status:
         label: 'Relationship status'
-        options:
-            married: женат/замужем
         span: auto
         type: dropdown
     age:
@@ -67,8 +59,6 @@ fields:
         type: number
     education:
         label: Education
-        options:
-            elementary_education: 'начальное образование'
         span: auto
         type: dropdown
     job:

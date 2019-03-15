@@ -5,15 +5,10 @@ use Model;
 /**
  * Model
  */
-class Property extends Model
+class ListItem extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\NestedTree;
-
-    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
-
-    public $translatable = ['value'];
-
+    
     /*
      * Disable timestamps by default.
      * Remove this line if timestamps are defined in the database table.
@@ -29,8 +24,14 @@ class Property extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'shohabbos_matcher_properties';
+    public $table = 'shohabbos_matcher_lists';
 
-    public $hidden = ['nest_depth', 'nest_right', 'nest_left', 'sort_order', 'parent_id', 'id'];
+    public $guarded = ['id'];
     
+
+    public $belongsTo = [
+        'profile' => [Profile::class]
+    ];
+
+
 }

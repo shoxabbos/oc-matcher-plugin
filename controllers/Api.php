@@ -5,6 +5,7 @@ use JWTAuth;
 use RainLab\User\Models\User;
 use Backend\Classes\Controller;
 use Shohabbos\Matcher\Models\Profile;
+use Shohabbos\Matcher\Models\ListItem;
 use Shohabbos\Matcher\Models\Property;
 
 class Api extends Controller
@@ -37,10 +38,7 @@ class Api extends Controller
     }
 
     public function getProfiles() {
-        $data = Input::only([
-            'nationality', 'laguage', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
-            'education', 'job', 'profession', 'contact', 'language', 'name', 'surname', 'middlename',
-        ], []);
+        $data = Input::all();
 
         return Profile::listApi($data);
     }
@@ -60,19 +58,57 @@ class Api extends Controller
 
 
 
+    // manage wishlist
+    public function getWishlist($id) {
+        $model = $this->findProfileModel($id);
+
+        if (!$model) {
+            return response()->json(['error' => 'not_found'], 404);
+        }
+
+        return $model->wishlist()->with(['profile'])->get();
+    }
+
+
+    public function createWishlist($id) {
+        $model = $this->findProfileModel($id);
+        $user = $this->getUser();
+
+        if (!$model) {
+            return response()->json(['error' => 'not_found'], 404);
+        }
+
+        $list = $model->wishlist()->where('user_id', $user->id)->first();
+
+        if ($list) {
+            $list->delete();
+            return 'deleted';
+        }
+
+        $list = new ListItem([
+            'user_id' => $user->id,
+            'profile_id' => $model->id,
+            'type' => 'wishlist'
+        ]);
+
+        $list->save();
+
+        return $list;
+    }
+
+
+
+
+
 
     // methods for manage profiles
     public function getUserProfiles() {
-        return $this->getUser()->profiles;   
+        return $this->getUser()->profiles()->with(['photo', 'photos'])->get();
     }
 
     public function createProfile() {
     	$user = $this->getUser();
-
-    	$data = Input::only([
-    		'nationality', 'laguage', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
-    		'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties'
-    	]);
+    	$data = Input::all();
 
     	$profile = new Profile($data);
     	$user->profiles()->add($profile);
@@ -87,10 +123,7 @@ class Api extends Controller
             return response()->json(['error' => 'not_found'], 404);
         }
 
-    	$data = Input::only([
-    		'nationality', 'laguage', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
-    		'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename',
-    	]);
+    	$data = Input::all();
 
     	$model->fill($data);
     	$model->save();
