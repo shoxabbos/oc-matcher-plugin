@@ -1,0 +1,12 @@
+columns:
+    id:
+        label: id
+        type: number
+    key:
+        label: key
+        type: text
+        searchable: true
+    value:
+        label: value
+        type: text
+        searchable: true

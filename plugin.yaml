@@ -8,13 +8,20 @@ permissions:
     manage_profiles:
         tab: 'shohabbos.matcher::lang.plugin.name'
         label: 'Manage profiles'
+    manage_properties:
+        tab: 'shohabbos.matcher::lang.plugin.name'
+        label: 'Manage properties'
 navigation:
     matcher-profiles:
-        label: Matcher
+        label: Profiles
         url: shohabbos/matcher/profiles
-        icon: icon-life-ring
+        icon: icon-users
         sideMenu:
             matcher-profiles:
                 label: Profiles
                 url: shohabbos/matcher/profiles
-                icon: icon-sitemap
+                icon: icon-users
+            matcher-properties:
+                label: Properties
+                url: shohabbos/matcher/properties
+                icon: icon-table

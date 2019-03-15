@@ -1,0 +1,10 @@
+name: Properties
+form: $/shohabbos/matcher/models/property/fields.yaml
+modelClass: Shohabbos\Matcher\Models\Property
+defaultRedirect: shohabbos/matcher/properties
+create:
+    redirect: 'shohabbos/matcher/properties/update/:id'
+    redirectClose: shohabbos/matcher/properties
+update:
+    redirect: shohabbos/matcher/properties
+    redirectClose: shohabbos/matcher/properties

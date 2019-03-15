@@ -112,4 +112,40 @@ class Profile extends Model
     }
 
 
+
+
+    
+
+
+
+
+
+    public function getGenderOptions() {
+        return $this->getPropertyValues('gender');
+    }
+
+    public function getNationalityOptions() {
+        return $this->getPropertyValues('nationality');
+    }
+
+    public function getRelationshipStatusOptions() {
+        return $this->getPropertyValues('relationship_status');
+    }
+
+    public function getEducationOptions() {
+        return $this->getPropertyValues('education');
+    }
+
+
+    private function getPropertyValues($key) {
+        $model = Property::where('key', $key)->first();
+
+        if (!$model) {
+            return ['--none--'];
+        }
+
+        return $model->children()->lists('value', 'key');
+    }
+
+
 }

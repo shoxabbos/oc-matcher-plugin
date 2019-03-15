@@ -24,7 +24,7 @@ fields:
             - Female
             - Male
         span: auto
-        required: 1
+        required: 0
         type: dropdown
     nationality:
         label: Nationality
@@ -32,7 +32,7 @@ fields:
             uzbek: Uzbek
             russian: Русский
         span: auto
-        required: 1
+        required: 0
         type: dropdown
     laguage:
         label: Language
@@ -53,17 +53,17 @@ fields:
     children:
         label: Children
         span: auto
-        required: 1
+        required: 0
         type: number
     height:
         label: Height
         span: auto
-        required: 1
+        required: 0
         type: number
     weight:
         label: Weight
         span: auto
-        required: 1
+        required: 0
         type: number
     education:
         label: Education

@@ -1,0 +1,5 @@
+title: Properties
+modelClass: Shohabbos\Matcher\Models\Property
+nameFrom: value
+toolbar:
+    buttons: reorder_toolbar
