@@ -40,7 +40,7 @@ class Api extends Controller
     public function getProfiles() {
         $data = Input::all();
 
-        return Profile::listApi($data);
+        return Profile::with(['photo', 'photos'])->listApi($data);
     }
 
 
@@ -53,25 +53,74 @@ class Api extends Controller
         return $this->getUser();
     }
 
+    public function getUserWishlist() {
+        $model = $this->getUser();
 
+        $data = [];
 
+        $items = $model->wishlist()
+            ->with(['profile', 'profile.photo', 'profile.photos'])
+            ->where('type', 'access')->get();
+
+        foreach ($items as $key => $value) {
+            if (isset($value['profile']) && !empty($value['profile'])) {
+                $data[] = $value['profile'];
+            }
+        }
+
+        return $data;
+    }
+
+    public function getUserPublic() {
+        $model = $this->getUser();
+
+        $data = [];
+
+        $items = $model->wishlist()
+            ->with(['profile', 'profile.photo', 'profile.photos'])
+            ->where('type', 'access')->get();
+
+        foreach ($items as $key => $value) {
+            if (isset($value['profile']) && !empty($value['profile'])) {
+                $data[] = $value['profile'];
+            }
+        }
+
+        return $data;
+    }
 
 
 
     // manage wishlist
-    public function getWishlist($id) {
-        $model = $this->findProfileModel($id);
+    
+    public function addToPublic($id) {
+        $model = Profile::find($id);
+        $user = $this->getUser();
 
         if (!$model) {
             return response()->json(['error' => 'not_found'], 404);
         }
 
-        return $model->wishlist()->with(['profile'])->get();
+        $list = $model->wishlist()->where('user_id', $user->id)->first();
+
+        if ($list) {
+            $list->delete();
+            return 'deleted';
+        }
+
+        $list = new ListItem([
+            'user_id' => $user->id,
+            'profile_id' => $model->id,
+            'type' => 'access'
+        ]);
+
+        $list->save();
+
+        return $list;
     }
 
-
-    public function createWishlist($id) {
-        $model = $this->findProfileModel($id);
+    public function addToWishlist($id) {
+        $model = Profile::find($id);
         $user = $this->getUser();
 
         if (!$model) {
@@ -108,7 +157,10 @@ class Api extends Controller
 
     public function createProfile() {
     	$user = $this->getUser();
-    	$data = Input::all();
+    	$data = Input::only([
+            'nationality', 'language', 'is_public', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
+            'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties'
+        ]);
 
     	$profile = new Profile($data);
     	$user->profiles()->add($profile);
@@ -123,7 +175,11 @@ class Api extends Controller
             return response()->json(['error' => 'not_found'], 404);
         }
 
-    	$data = Input::all();
+    	$data = Input::only([
+            'nationality', 'language', 'is_public', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
+            'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties'
+        ]);
+
 
     	$model->fill($data);
     	$model->save();

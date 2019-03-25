@@ -9,20 +9,26 @@ Route::group(['prefix' => 'api', 'middleware' => ['\Tymon\JWTAuth\Middleware\Get
 	Route::get('/properties', 'Shohabbos\Matcher\Controllers\Api@getProperties');
 	Route::get('/profiles', 'Shohabbos\Matcher\Controllers\Api@getProfiles');
 	Route::get('/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@getProfile');
+	Route::post('/profile/{id}/wishlist', 'Shohabbos\Matcher\Controllers\Api@addToWishlist');
+	Route::post('/profile/{id}/public', 'Shohabbos\Matcher\Controllers\Api@addToPublic');
+
+
 
 	
+
 	// user account
 	Route::get('/user', 'Shohabbos\Matcher\Controllers\Api@getUserProfile');
+	Route::get('/user/wishlist', 'Shohabbos\Matcher\Controllers\Api@getUserWishlist');
+	Route::get('/user/public', 'Shohabbos\Matcher\Controllers\Api@getUserPublic');
+
+
 
 	
 	// user profile manage
 	Route::get('/user/profiles', 'Shohabbos\Matcher\Controllers\Api@getUserProfiles');
-	Route::get('/user/profile/{id}/wishlist', 'Shohabbos\Matcher\Controllers\Api@getWishlist');
-	Route::post('/user/profile/{id}/wishlist', 'Shohabbos\Matcher\Controllers\Api@createWishlist');
 	Route::post('/user/profile', 'Shohabbos\Matcher\Controllers\Api@createProfile');
+	Route::post('/user/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@updateProfile');
 	Route::delete('/user/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@deleteProfile');
-	Route::put('/user/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@updateProfile');
-
 	
 
 });

@@ -4,6 +4,7 @@ use RainLab\User\Models\User;
 use RainLab\User\Controllers\Users;
 use System\Classes\PluginBase;
 use Shohabbos\Matcher\Models\Profile;
+use Shohabbos\Matcher\Models\ListItem;
 
 class Plugin extends PluginBase
 {
@@ -27,8 +28,9 @@ class Plugin extends PluginBase
         // Local event hook that affects all users
         User::extend(function($model) {
             $model->hasMany['profiles'] = Profile::class;
+            $model->hasMany['wishlist'] = ListItem::class;
+
             //$model->hasMany['profiles_count'] = [Profile::class, 'count' => true];
-            
         });
 
 
