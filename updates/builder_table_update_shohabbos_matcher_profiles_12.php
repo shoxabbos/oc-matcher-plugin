@@ -3,13 +3,14 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableUpdateShohabbosMatcherProfiles10 extends Migration
+class BuilderTableUpdateShohabbosMatcherProfiles12 extends Migration
 {
     public function up()
     {
         Schema::table('shohabbos_matcher_profiles', function($table)
         {
-            $table->boolean('is_private');
+            $table->boolean('is_public')->default(1);
+            $table->dropColumn('is_private');
         });
     }
     
@@ -17,7 +18,8 @@ class BuilderTableUpdateShohabbosMatcherProfiles10 extends Migration
     {
         Schema::table('shohabbos_matcher_profiles', function($table)
         {
-            $table->dropColumn('is_private');
+            $table->dropColumn('is_public');
+            $table->boolean('is_private');
         });
     }
 }

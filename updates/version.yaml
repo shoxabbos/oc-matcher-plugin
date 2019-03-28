@@ -33,3 +33,39 @@
 1.0.12:
     - 'Updated table shohabbos_matcher_properties'
     - builder_table_update_shohabbos_matcher_properties.php
+1.0.13:
+    - 'Updated table shohabbos_matcher_properties'
+    - builder_table_update_shohabbos_matcher_properties_2.php
+1.0.14:
+    - 'Updated table shohabbos_matcher_properties'
+    - builder_table_update_shohabbos_matcher_properties_3.php
+1.0.15:
+    - 'Created table shohabbos_matcher_lists'
+    - builder_table_create_shohabbos_matcher_lists.php
+1.0.16:
+    - 'Updated table shohabbos_matcher_lists'
+    - builder_table_update_shohabbos_matcher_lists.php
+1.0.17:
+    - 'Updated table shohabbos_matcher_lists'
+    - builder_table_update_shohabbos_matcher_lists_2.php
+1.0.18:
+    - 'Updated table shohabbos_matcher_lists'
+    - builder_table_update_shohabbos_matcher_lists_3.php
+1.0.19:
+    - 'Updated table shohabbos_matcher_lists'
+    - builder_table_update_shohabbos_matcher_lists_4.php
+1.0.20:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_9.php
+1.0.21:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_10.php
+1.0.22:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_11.php
+1.0.23:
+    - 'Updated table shohabbos_matcher_profiles'
+    - builder_table_update_shohabbos_matcher_profiles_12.php
+1.0.24:
+    - 'Add notify key fields to users table'
+    - migration1024.php

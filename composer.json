@@ -1,0 +1,19 @@
+{
+    "name": "shohabbos/oc-marcher-plugin",
+    "type": "october-plugin",
+    "description": "OctoberCMS plugin",
+    "keywords": ["october", "cms", "marcher", "plugin"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shohabbos",
+            "email": "info@itmaker.uz",
+            "role": "Co-founder"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "composer/installers": "~1.0",
+        "alymosul/exponent-server-sdk-php": "*"
+    }
+}

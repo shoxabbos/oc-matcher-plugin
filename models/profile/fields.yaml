@@ -73,6 +73,12 @@ fields:
         label: Contact
         span: auto
         type: text
+    is_public:
+        label: 'Is public profile'
+        span: auto
+        placeholder: ''
+        default: 1
+        type: switch
     photo:
         label: 'Main photo'
         mode: image

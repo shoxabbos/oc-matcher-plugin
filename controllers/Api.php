@@ -12,6 +12,25 @@ class Api extends Controller
 {
 
 
+    public function test() {
+        $interestDetails = ['1', "ExponentPushToken[Ly1nncFCSjUEVaiWW6qWs4]"];
+
+        // You can quickly bootup an expo instance
+        $expo = \ExponentPhpSDK\Expo::normalSetup();
+
+        // Subscribe the recipient to the server
+        $expo->subscribe($interestDetails[0], $interestDetails[1]);
+
+        // Build the notification data
+        $notification = [
+            'body' => 'Hello World!'
+        ];
+
+        // Notify an interest with a notification
+        $expo->notify($interestDetails[0], $notification);
+    }
+
+
     // public methods for all
 
     public function getProperties() {
@@ -49,6 +68,35 @@ class Api extends Controller
 
 
     //  methods for manage with account
+    public function getUserRequests() {
+        $model = $this->getUser();
+        $profile = $model->profiles()->first('id');
+
+        if (!$profile) {
+            return [];
+        }
+
+        $data = ListItem::where('profile_id', $profile)
+            ->where('type', 'access')
+            ->get();
+
+        return $data;
+    }
+
+    public function setUserNotifyPush($key) {
+        $model = $this->getUser();
+
+        if ($model) {
+            $model->notify_key = $key;
+            $model->save();
+
+            return 'ok';
+        }
+
+        return 'fail';
+    }
+
+
     public function getUserProfile() {
         return $this->getUser();
     }
@@ -58,9 +106,9 @@ class Api extends Controller
 
         $data = [];
 
-        $items = $model->wishlist()
+        $items = $model->list()
             ->with(['profile', 'profile.photo', 'profile.photos'])
-            ->where('type', 'access')->get();
+            ->where('type', 'wishlist')->get();
 
         foreach ($items as $key => $value) {
             if (isset($value['profile']) && !empty($value['profile'])) {
@@ -76,7 +124,7 @@ class Api extends Controller
 
         $data = [];
 
-        $items = $model->wishlist()
+        $items = $model->list()
             ->with(['profile', 'profile.photo', 'profile.photos'])
             ->where('type', 'access')->get();
 
@@ -101,7 +149,10 @@ class Api extends Controller
             return response()->json(['error' => 'not_found'], 404);
         }
 
-        $list = $model->wishlist()->where('user_id', $user->id)->first();
+        $list = $model->list()
+            ->where('user_id', $user->id)
+            ->where('type', 'access')
+            ->first();
 
         if ($list) {
             $list->delete();
@@ -114,7 +165,23 @@ class Api extends Controller
             'type' => 'access'
         ]);
 
-        $list->save();
+
+        if ($list->save()) {
+            $interestDetails = [md5($list->profile->user_id), $list->profile->user->notify_key];
+
+            // You can quickly bootup an expo instance
+            $expo = \ExponentPhpSDK\Expo::normalSetup();
+
+            // Subscribe the recipient to the server
+            $expo->subscribe($interestDetails[0], $interestDetails[1]);
+
+            // Build the notification data
+            $notification = ['body' => 'Запрос на просмотр личных данных.'];
+
+            // Notify an interest with a notification
+            $expo->notify($interestDetails[0], $notification);
+        }
+
 
         return $list;
     }
@@ -127,7 +194,10 @@ class Api extends Controller
             return response()->json(['error' => 'not_found'], 404);
         }
 
-        $list = $model->wishlist()->where('user_id', $user->id)->first();
+        $list = $model->list()
+            ->where('user_id', $user->id)
+            ->where('type', 'wishlist')
+            ->first();
 
         if ($list) {
             $list->delete();

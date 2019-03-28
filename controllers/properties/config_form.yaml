@@ -1,6 +1,6 @@
 name: Properties
-form: $/shohabbos/matcher/models/property/fields.yaml
 modelClass: Shohabbos\Matcher\Models\Property
+form: $/shohabbos/matcher/models/property/fields.yaml
 defaultRedirect: shohabbos/matcher/properties
 create:
     redirect: 'shohabbos/matcher/properties/update/:id'
@@ -8,3 +8,4 @@ create:
 update:
     redirect: shohabbos/matcher/properties
     redirectClose: shohabbos/matcher/properties
+preview: {  }

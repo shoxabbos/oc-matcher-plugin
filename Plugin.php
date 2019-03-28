@@ -28,7 +28,7 @@ class Plugin extends PluginBase
         // Local event hook that affects all users
         User::extend(function($model) {
             $model->hasMany['profiles'] = Profile::class;
-            $model->hasMany['wishlist'] = ListItem::class;
+            $model->hasMany['list'] = ListItem::class;
 
             //$model->hasMany['profiles_count'] = [Profile::class, 'count' => true];
         });

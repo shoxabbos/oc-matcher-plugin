@@ -6,6 +6,7 @@ use Shohabbos\Matcher\Controllers\Api;
 Route::group(['prefix' => 'api', 'middleware' => ['\Tymon\JWTAuth\Middleware\GetUserFromToken']], function() {
 
 	// public profiles
+	Route::get('/test', 'Shohabbos\Matcher\Controllers\Api@test');
 	Route::get('/properties', 'Shohabbos\Matcher\Controllers\Api@getProperties');
 	Route::get('/profiles', 'Shohabbos\Matcher\Controllers\Api@getProfiles');
 	Route::get('/profile/{id}', 'Shohabbos\Matcher\Controllers\Api@getProfile');
@@ -20,6 +21,8 @@ Route::group(['prefix' => 'api', 'middleware' => ['\Tymon\JWTAuth\Middleware\Get
 	Route::get('/user', 'Shohabbos\Matcher\Controllers\Api@getUserProfile');
 	Route::get('/user/wishlist', 'Shohabbos\Matcher\Controllers\Api@getUserWishlist');
 	Route::get('/user/public', 'Shohabbos\Matcher\Controllers\Api@getUserPublic');
+	Route::get('/user/requests', 'Shohabbos\Matcher\Controllers\Api@getUserRequests');
+	Route::get('/user/register-notify/{key}', 'Shohabbos\Matcher\Controllers\Api@setUserNotifyPush');
 
 
 

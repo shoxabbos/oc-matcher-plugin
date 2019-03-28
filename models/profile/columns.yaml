@@ -63,3 +63,7 @@ columns:
     deleted_at:
         label: deleted_at
         type: datetime
+    is_public:
+        label: 'Is public'
+        type: switch
+        invisible: true

@@ -40,7 +40,7 @@ class Profile extends Model
     ];
 
     public $hasMany = [
-        'wishlist' => [ListItem::class]
+        'list' => [ListItem::class]
     ];
 
     /**
