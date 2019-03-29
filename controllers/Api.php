@@ -11,7 +11,6 @@ use Shohabbos\Matcher\Models\Property;
 class Api extends Controller
 {
 
-
     public function test() {
         $interestDetails = ['1', "ExponentPushToken[Ly1nncFCSjUEVaiWW6qWs4]"];
 
@@ -31,8 +30,6 @@ class Api extends Controller
     }
 
 
-    // public methods for all
-
     public function getProperties() {
         $data = [];
         $models = Property::with(['children'])->get();
@@ -46,45 +43,42 @@ class Api extends Controller
         return $data;
     }
 
-    public function getProfile($id) {
-        $model = Profile::with(['photo', 'photos'])->find($id);
 
-        if (!$model) {
-            return response()->json(['error' => 'not_found'], 404);
-        }
 
-        return $model;
+
+    // user
+    public function getUser() {
+        return $this->auth();
     }
 
-    public function getProfiles() {
+    public function getUserById($id) {
+        return User::with(['profile', 'profile.photo', 'profile.photos'])->find($id);
+    }
+
+    public function updateUser() {
+        $user = $this->auth();
+
+        $data = Input::only([
+            'nationality', 'language', 'is_public', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
+            'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties',
+        ]);
+
+        $user->profile;
+        $user->profile->fill($data);
+        $user->profile->saveOrFail();
+
+        return $user;
+    }
+
+    public function getUsers() {
         $data = Input::all();
 
         return Profile::with(['photo', 'photos'])->listApi($data);
     }
 
 
-
-
-
-
-    //  methods for manage with account
-    public function getUserRequests() {
-        $model = $this->getUser();
-        $profile = $model->profiles()->first('id');
-
-        if (!$profile) {
-            return [];
-        }
-
-        $data = ListItem::where('profile_id', $profile)
-            ->where('type', 'access')
-            ->get();
-
-        return $data;
-    }
-
     public function setUserNotifyPush($key) {
-        $model = $this->getUser();
+        $model = $this->auth();
 
         if ($model) {
             $model->notify_key = $key;
@@ -97,61 +91,12 @@ class Api extends Controller
     }
 
 
-    public function getUserProfile() {
-        return $this->getUser();
-    }
-
-    public function getUserWishlist() {
-        $model = $this->getUser();
-
-        $data = [];
-
-        $items = $model->list()
-            ->with(['profile', 'profile.photo', 'profile.photos'])
-            ->where('type', 'wishlist')->get();
-
-        foreach ($items as $key => $value) {
-            if (isset($value['profile']) && !empty($value['profile'])) {
-                $data[] = $value['profile'];
-            }
-        }
-
-        return $data;
-    }
-
-    public function getUserPublic() {
-        $model = $this->getUser();
-
-        $data = [];
-
-        $items = $model->list()
-            ->with(['profile', 'profile.photo', 'profile.photos'])
-            ->where('type', 'access')->get();
-
-        foreach ($items as $key => $value) {
-            if (isset($value['profile']) && !empty($value['profile'])) {
-                $data[] = $value['profile'];
-            }
-        }
-
-        return $data;
-    }
-
-
-
-    // manage wishlist
-    
     public function addToPublic($id) {
-        $model = Profile::find($id);
         $user = $this->getUser();
 
-        if (!$model) {
-            return response()->json(['error' => 'not_found'], 404);
-        }
-
-        $list = $model->list()
-            ->where('user_id', $user->id)
+        $list = $user->list()
             ->where('type', 'access')
+            ->where('profile_id', $id)
             ->first();
 
         if ($list) {
@@ -161,13 +106,13 @@ class Api extends Controller
 
         $list = new ListItem([
             'user_id' => $user->id,
-            'profile_id' => $model->id,
+            'profile_id' => $id,
             'type' => 'access'
         ]);
 
 
         if ($list->save()) {
-            $interestDetails = [md5($list->profile->user_id), $list->profile->user->notify_key];
+            $interestDetails = [md5($list->profile->id), $list->profile->notify_key];
 
             // You can quickly bootup an expo instance
             $expo = \ExponentPhpSDK\Expo::normalSetup();
@@ -186,17 +131,31 @@ class Api extends Controller
         return $list;
     }
 
+    public function getUserPublic() {
+        $model = $this->auth();
+        $items = $model->list()->where('type', 'access')->lists('profile_id');
+
+        return Profile::with(['photo', 'photos'])->whereIn('user_id', $items)->get();
+    }
+
+
+    public function getUserRequests() {
+        $user = $this->auth();
+
+        $items = $user->list()
+            ->where('type', 'access')
+            ->lists('profile_id');
+
+        return Profile::with(['photo', 'photos'])->whereIn('user_id', $items)->get();
+    }
+
+
     public function addToWishlist($id) {
-        $model = Profile::find($id);
         $user = $this->getUser();
 
-        if (!$model) {
-            return response()->json(['error' => 'not_found'], 404);
-        }
-
-        $list = $model->list()
-            ->where('user_id', $user->id)
+        $list = $user->list()
             ->where('type', 'wishlist')
+            ->where('profile_id', $id)
             ->first();
 
         if ($list) {
@@ -206,7 +165,7 @@ class Api extends Controller
 
         $list = new ListItem([
             'user_id' => $user->id,
-            'profile_id' => $model->id,
+            'profile_id' => $id,
             'type' => 'wishlist'
         ]);
 
@@ -216,60 +175,14 @@ class Api extends Controller
     }
 
 
+    public function getUserWishlist() {
+        $user = $this->auth();
+        $items = $user->list()->where('type', 'wishlist')->lists('profile_id');
 
-
-
-
-    // methods for manage profiles
-    public function getUserProfiles() {
-        return $this->getUser()->profiles()->with(['photo', 'photos'])->get();
+        return Profile::with(['photo', 'photos'])->whereIn('user_id', $items)->get();
     }
 
-    public function createProfile() {
-    	$user = $this->getUser();
-    	$data = Input::only([
-            'nationality', 'language', 'is_public', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
-            'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties'
-        ]);
 
-    	$profile = new Profile($data);
-    	$user->profiles()->add($profile);
-
-    	return $profile;
-    }
-
-    public function updateProfile($id) {
-    	$model = $this->findProfileModel($id);
-
-        if (!$model) {
-            return response()->json(['error' => 'not_found'], 404);
-        }
-
-    	$data = Input::only([
-            'nationality', 'language', 'is_public', 'gender', 'relationship_status', 'age', 'children', 'height', 'weight',
-            'education', 'job', 'profession', 'contact', 'photo', 'photos', 'name', 'surname', 'middlename', 'properties'
-        ]);
-
-
-    	$model->fill($data);
-    	$model->save();
-
-        return $model;
-    }
-
-    public function deleteProfile($id) {
-     	$model = $this->findProfileModel($id);
-
-        if (!$model) {
-            return response()->json(['error' => 'not_found'], 404);
-        }
-
-        if (!$model->delete()) {
-            return response()->json(['error' => 'something_went_wrong'], 500);
-        }
-
-        return 'ok';
-    }
 
 
 
@@ -279,11 +192,7 @@ class Api extends Controller
 
     // private methods
 
-    private function findProfileModel($id) {
-    	return $this->getUser()->profiles()->where('id', $id)->first();
-    }
-
-    private function getUser() {
+    private function auth() {
 		return JWTAuth::parseToken()->authenticate();
 	}
 

@@ -20,7 +20,7 @@ class Profile extends Model
     public $rules = [
     ];
 
-    public $guarded = ['id', 'user_id'];
+    public $guarded = ['id'];
 
     /**
      * @var string The database table used by the model.
@@ -30,6 +30,21 @@ class Profile extends Model
     public $belongsTo = [
         'user' => 'RainLab\User\Models\User'
     ];
+
+    public static function getFromUser($user) {
+        if ($user->profile) {
+            return $user->profile;
+        }
+
+        $profile = new static;
+        $profile->user = $user;
+        $profile->save();
+
+
+        $user->profile = $profile;
+
+        return $profile;
+    } 
 
     public $attachOne = [
         'photo' => 'System\Models\File'

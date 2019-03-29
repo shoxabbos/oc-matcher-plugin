@@ -73,12 +73,15 @@ fields:
         label: Contact
         span: auto
         type: text
-    is_public:
-        label: 'Is public profile'
+    photos:
+        label: 'Photo gallery'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
         span: auto
-        placeholder: ''
-        default: 1
-        type: switch
+        type: fileupload
     photo:
         label: 'Main photo'
         mode: image
@@ -91,32 +94,28 @@ fields:
             extension: jpg
         span: auto
         type: fileupload
-    photos:
-        label: 'Photo gallery'
-        mode: image
-        useCaption: true
-        thumbOptions:
-            mode: crop
-            extension: auto
+    properties:
+        label: Properties
+        prompt: 'Add new item'
+        span: full
+        type: repeater
+        tab: 'Main data'
+        form:
+            fields:
+                properties:
+                    label: Properties
+                    prompt: 'Add new item'
+                    span: auto
+                    type: text
+                    tab: 'Main data'
+                value:
+                    label: Value
+                    span: auto
+                    required: 1
+                    type: text
+    is_public:
+        label: 'Is public profile'
         span: auto
-        type: fileupload
-tabs:
-    fields:
-        properties:
-            label: Properties
-            prompt: 'Add new item'
-            span: full
-            type: repeater
-            tab: 'Main data'
-            form:
-                fields:
-                    properties:
-                        label: Properties
-                        prompt: 'Add new item'
-                        span: auto
-                        type: text
-                    value:
-                        label: Value
-                        span: auto
-                        required: 1
-                        type: text
+        placeholder: ''
+        default: 1
+        type: switch

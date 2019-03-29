@@ -1,6 +1,7 @@
 <?php namespace Shohabbos\Matcher\Models;
 
 use Model;
+use RainLab\User\Models\User;
 
 /**
  * Model
@@ -30,7 +31,7 @@ class ListItem extends Model
     
 
     public $belongsTo = [
-        'profile' => [Profile::class]
+        'profile' => [User::class]
     ];
 
 
